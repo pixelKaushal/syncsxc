@@ -1,4 +1,4 @@
-# SyncSXC ⚡
+# SyncSXC 
 ### *Unified Campus Event Management for St. Xavier's College, Maitighar*
 
 ---
