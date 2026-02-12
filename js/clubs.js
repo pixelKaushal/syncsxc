@@ -28,19 +28,36 @@
             }
         });
 
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+        // Search clubs
+        function searchClubs() {
+            const searchTerm = document.getElementById('clubSearch').value.toLowerCase();
+            const cards = document.querySelectorAll('.club-card');
+            let visibleCount = 0;
+            
+            cards.forEach(card => {
+                const name = card.dataset.name;
+                const code = card.dataset.code;
+                
+                if (name.includes(searchTerm) || code.includes(searchTerm)) {
+                    card.style.display = 'flex';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
                 }
             });
+            
+            // Update club count
+            document.getElementById('clubCount').innerHTML = `<i class="fas fa-list"></i> ${visibleCount} Clubs`;
+        }
+
+        // Enter key for search
+        document.getElementById('clubSearch')?.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchClubs();
+            }
         });
+
+ 
 
         // Scroll to top button
         window.onscroll = function() {
@@ -72,12 +89,4 @@
                     document.body.style.overflow = 'auto';
                 }
             }
-        });
-
-        // Dynamic copyright year
-        document.addEventListener('DOMContentLoaded', function() {
-            const yearElements = document.querySelectorAll('.copyright-year');
-            yearElements.forEach(el => {
-                el.textContent = new Date().getFullYear();
-            });
         });

@@ -1,4 +1,4 @@
-  // Mobile Menu Toggle
+   // Mobile Menu Toggle
         function toggleMobileMenu() {
             const navLinks = document.getElementById('navLinks');
             const menuBtn = document.querySelector('.mobile-menu-btn i');
@@ -28,17 +28,14 @@
             }
         });
 
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(q => {
+            q.addEventListener('click', () => {
+                const item = q.parentElement;
+                item.classList.toggle('active');
+                const icon = q.querySelector('i:last-child');
+                icon.classList.toggle('fa-plus');
+                icon.classList.toggle('fa-minus');
             });
         });
 
@@ -74,10 +71,13 @@
             }
         });
 
-        // Dynamic copyright year
-        document.addEventListener('DOMContentLoaded', function() {
-            const yearElements = document.querySelectorAll('.copyright-year');
-            yearElements.forEach(el => {
-                el.textContent = new Date().getFullYear();
-            });
+        // Auto-expand first FAQ
+        window.addEventListener('load', function() {
+            const firstFaq = document.querySelector('.faq-item');
+            if (firstFaq) {
+                firstFaq.classList.add('active');
+                const icon = firstFaq.querySelector('.faq-question i:last-child');
+                icon.classList.remove('fa-plus');
+                icon.classList.add('fa-minus');
+            }
         });
