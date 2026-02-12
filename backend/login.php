@@ -1,10 +1,54 @@
-    <?php
+<?php
 session_start();
-// Redirect if already logged in
-if(isset($_SESSION['admin_id'])) {
-    header("Location: dashboard.php");
-    exit();
-}
+require_once 'data.php';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = trim($_POST['email']);
+    $password = $_POST['password'];
+
+    // 1. Domain Validation
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL) || !str_ends_with($email, '@sxc.edu.np')) {
+        die("<script>alert('Access Denied: Use your institutional @sxc.edu.np account.'); window.history.back();</script>");
+    }
+
+
+    $query = "SELECT u.id AS user_uid, u.password, u.role, c.id AS club_uid, c.name AS club_display_name 
+              FROM users u 
+              LEFT JOIN clubs c ON u.primary_email = c.email 
+              WHERE u.primary_email = ?";
+    
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows === 0) {
+        die("<script>alert('Account not found. Students must Sign Up. Executives, contact Master Admin.'); window.location.href='../signup.php';</script>");
+    }
+
+    $user = $result->fetch_assoc();
+
+    // 3. Password Verification
+    if (password_verify($password, $user['password'])) {
+        $_SESSION['user_id'] = $user['user_uid'];
+        $_SESSION['user_email'] = $email;
+        $_SESSION['role'] = $user['role'];
+
+        // 4. Role-Based Redirection
+        if ($user['role'] === 'admin') {
+            
+            $_SESSION['club_name'] = $user['club_display_name']; 
+            $_SESSION['club_id'] = $user['club_uid'];
+            
+            header('Location: ../admin/dashboard.php');
+        } else {
+            header('Location: ../index.php');
+        }
+        exit;
+    } else {
+        die("<script>alert('Invalid password.'); window.history.back();</script>");
+    }
+} 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -161,7 +205,7 @@ if(isset($_SESSION['admin_id'])) {
                 <p>Secure access for club presidents & coordinators</p>
             </div>
 
-            <form action="backend/login_process.php" method="POST">
+            <form method="POST">
                 <div class="input-group">
                     <i class="fa-solid fa-envelope"></i>
                     <input type="email" name="email" placeholder="college email" required>

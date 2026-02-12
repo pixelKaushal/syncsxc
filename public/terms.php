@@ -1,14 +1,14 @@
 <?php
 session_start();
-require_once '../backend/data.php';
+require_once '../backend/data.php'; // For potential footer stats
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Event Timeline | SyncSXC</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Institutional Protocol | SyncSXC</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -262,12 +262,13 @@ require_once '../backend/data.php';
         }
 
         .page-header h1 {
-            font-size: 3rem;
-            font-weight: 800;
+            font-size: 3.2rem;
+            font-weight: 900;
             font-family: var(--font-heading);
             color: var(--sxc-maroon);
             margin-bottom: 15px;
             animation: fadeInUp 1s ease;
+            letter-spacing: -1px;
         }
 
         .page-header p {
@@ -277,33 +278,18 @@ require_once '../backend/data.php';
             animation: fadeInUp 1s ease 0.1s both;
         }
 
-        .header-stats {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-top: 30px;
-            animation: fadeInUp 1s ease 0.2s both;
-        }
-
-        .stat-item {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .stat-number {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--sxc-maroon);
-            font-family: var(--font-heading);
-            line-height: 1;
-        }
-
-        .stat-label {
+        .page-badge {
+            display: inline-block;
+            background: var(--sxc-gold-light);
+            color: var(--sxc-gold-dark);
+            padding: 8px 24px;
+            border-radius: var(--radius-full);
             font-size: 0.85rem;
-            color: var(--text-muted);
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 5px;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            border: 1px solid var(--sxc-gold);
         }
 
         @keyframes fadeInUp {
@@ -317,379 +303,299 @@ require_once '../backend/data.php';
             }
         }
 
-        /* ===== FILTER BAR ===== */
-        .filter-section {
+        /* ===== PROTOCOL CARD ===== */
+        .protocol-card {
             background: var(--white);
-            padding: 30px 0;
-            border-bottom: 1px solid var(--border-light);
-            position: sticky;
-            top: 80px;
-            z-index: 99;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .filter-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .filter-tabs {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .filter-tab {
-            padding: 10px 24px;
-            border-radius: var(--radius-full);
-            background: var(--white);
-            border: 1px solid var(--border-light);
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition-base);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .filter-tab i {
-            font-size: 0.85rem;
-        }
-
-        .filter-tab.active,
-        .filter-tab:hover {
-            background: var(--sxc-maroon);
-            color: var(--white);
-            border-color: var(--sxc-maroon);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(6, 103, 164, 0.2);
-        }
-
-        .search-box {
-            display: flex;
-            align-items: center;
-            background: var(--white);
-            border-radius: var(--radius-full);
-            padding: 5px;
-            border: 1px solid var(--border-light);
-            box-shadow: var(--shadow-sm);
-            transition: var(--transition-base);
-            min-width: 300px;
-        }
-
-        .search-box:focus-within {
-            border-color: var(--sxc-maroon);
-            box-shadow: 0 0 0 3px rgba(6, 103, 164, 0.1);
-        }
-
-        .search-box input {
-            border: none;
-            padding: 10px 20px;
-            font-size: 0.9rem;
-            width: 100%;
-            outline: none;
-            background: transparent;
-            border-radius: var(--radius-full);
-        }
-
-        .search-box button {
-            background: var(--sxc-maroon);
-            border: none;
-            color: var(--white);
-            padding: 10px 24px;
-            border-radius: var(--radius-full);
-            cursor: pointer;
-            transition: var(--transition-base);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 600;
-            white-space: nowrap;
-        }
-
-        .search-box button:hover {
-            background: var(--sxc-maroon-dark);
-            transform: scale(0.98);
-        }
-
-        /* ===== EVENTS GRID ===== */
-        .events-section {
-            padding: 60px 0;
-            background: var(--bg-light);
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-
-        .section-header h2 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            font-family: var(--font-heading);
-            color: var(--text-dark);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .section-header h2 i {
-            color: var(--sxc-gold);
-        }
-
-        .event-count {
-            background: var(--sxc-maroon-light);
-            color: var(--sxc-maroon);
-            padding: 6px 16px;
-            border-radius: var(--radius-full);
-            font-weight: 600;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .event-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-            gap: 30px;
-        }
-
-        .event-card {
-            background: var(--white);
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            border: 1px solid var(--border-light);
-            box-shadow: var(--shadow-sm);
-            transition: var(--transition-base);
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
-
-        .event-card:hover {
-            transform: translateY(-8px);
+            border-radius: var(--radius-xl);
             box-shadow: var(--shadow-lg);
-            border-color: transparent;
+            padding: 60px;
+            margin: 40px 0 60px;
+            border: 1px solid var(--border-light);
+            position: relative;
+            overflow: hidden;
         }
 
-        .event-card::before {
+        .protocol-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
-            height: 4px;
+            width: 100%;
+            height: 6px;
             background: linear-gradient(90deg, var(--sxc-maroon), var(--sxc-gold));
-            opacity: 0;
-            transition: var(--transition-base);
-            z-index: 1;
         }
 
-        .event-card:hover::before {
-            opacity: 1;
-        }
-
-        .event-header {
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: linear-gradient(to right, var(--white), var(--bg-light));
-            border-bottom: 1px solid var(--border-light);
-        }
-
-        .status-badge {
-            padding: 6px 16px;
-            border-radius: var(--radius-full);
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .status-pending { 
-            background: #fff3cd; 
+        /* ===== IMPORTANT NOTE ===== */
+        .important-note {
+            background: linear-gradient(135deg, #fff8e1, #fffdf7);
+            border-left: 8px solid var(--sxc-gold);
+            border-radius: var(--radius-lg);
+            padding: 30px 35px;
+            margin: 40px 0;
             color: #856404;
-            border-left: 3px solid #ffc107;
-        }
-
-        .status-approved { 
-            background: #d4edda; 
-            color: #155724;
-            border-left: 3px solid #28a745;
-        }
-
-        .price-tag {
-            font-weight: 700;
-            color: var(--sxc-maroon);
-            font-size: 1rem;
-            background: var(--sxc-maroon-light);
-            padding: 6px 16px;
-            border-radius: var(--radius-full);
-            display: inline-flex;
+            display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 25px;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
         }
 
-        .event-body {
-            padding: 25px;
-            flex-grow: 1;
+        .important-note::after {
+            content: '🔒';
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            font-size: 8rem;
+            opacity: 0.03;
+            transform: rotate(-15deg);
         }
-        
-        .club-badge {
+
+        .important-note i {
+            font-size: 2.8rem;
             color: var(--sxc-gold);
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--sxc-gold-light);
-            padding: 4px 14px;
-            border-radius: var(--radius-full);
+            background: rgba(212, 175, 55, 0.1);
+            padding: 20px;
+            border-radius: 50%;
         }
 
-        .event-title {
-            font-size: 1.5rem;
-            margin: 12px 0 15px;
-            color: var(--text-dark);
+        .important-note div {
+            flex: 1;
+        }
+
+        .important-note strong {
+            color: #7a5c00;
+            font-size: 1.1rem;
+        }
+
+        /* ===== LEGAL SECTIONS ===== */
+        .legal-section {
+            margin-bottom: 50px;
+        }
+
+        .legal-section h2 {
+            color: var(--sxc-dark);
+            font-size: 1.8rem;
             font-weight: 700;
             font-family: var(--font-heading);
-            line-height: 1.3;
-        }
-
-        .event-desc {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-
-        .info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            font-size: 0.9rem;
-            padding-top: 20px;
-            border-top: 1px dashed var(--border-dark);
-        }
-
-        .info-item {
+            margin: 50px 0 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border-light);
+            position: relative;
             display: flex;
             align-items: center;
-            gap: 10px;
-            color: var(--text-muted);
-        }
-
-        .info-item i {
-            color: var(--sxc-maroon);
-            width: 16px;
-            font-size: 0.95rem;
-        }
-
-        .event-footer {
-            padding: 20px;
-            background: var(--bg-light);
-            border-top: 1px solid var(--border-light);
-            display: flex;
             gap: 12px;
         }
 
-        .btn {
-            flex: 1;
-            padding: 12px;
-            border-radius: var(--radius-md);
-            text-align: center;
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 600;
-            transition: var(--transition-base);
+        .legal-section h2 i {
+            color: var(--sxc-gold);
+            font-size: 1.8rem;
+        }
+
+        .legal-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 80px;
+            height: 2px;
+            background: var(--sxc-gold);
+        }
+
+        .legal-section p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        .legal-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .legal-section li {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            margin-bottom: 18px;
+            padding-left: 30px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .legal-section li::before {
+            content: '•';
+            color: var(--sxc-gold);
+            font-size: 1.8rem;
+            position: absolute;
+            left: 0;
+            top: -10px;
+        }
+
+        .role-tag {
+            padding: 6px 16px;
+            border-radius: var(--radius-full);
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-            gap: 8px;
-            border: none;
-            cursor: pointer;
+            gap: 6px;
+            margin-left: 10px;
         }
 
-        .btn-main {
-            background: var(--sxc-maroon);
-            color: var(--white);
-            box-shadow: 0 4px 12px rgba(6, 103, 164, 0.2);
-        }
-
-        .btn-main:hover {
-            background: var(--sxc-maroon-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(6, 103, 164, 0.3);
-        }
-
-        .btn-outline {
-            border: 1px solid var(--border-dark);
-            color: var(--text-muted);
-            background: var(--white);
-        }
-
-        .btn-outline:hover {
-            background: var(--white);
-            border-color: var(--sxc-maroon);
+        .tag-executive {
+            background: var(--sxc-maroon-light);
             color: var(--sxc-maroon);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--sxc-maroon);
         }
 
-        .empty-state {
-            grid-column: 1/-1;
-            text-align: center;
-            padding: 80px 20px;
+        .tag-student {
+            background: var(--bg-light);
+            color: var(--text-muted);
+            border: 1px solid var(--border-dark);
+        }
+
+        code {
+            background: var(--bg-light);
+            padding: 4px 12px;
+            border-radius: var(--radius-full);
+            font-size: 0.9rem;
+            color: var(--sxc-maroon);
+            font-weight: 600;
+            border: 1px solid var(--border-light);
+        }
+
+        /* ===== FAQ SECTION ===== */
+        .faq-section {
+            margin-top: 80px;
+        }
+
+        .faq-section h2 {
+            color: var(--sxc-dark);
+            font-size: 2rem;
+            font-weight: 800;
+            font-family: var(--font-heading);
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: none;
+        }
+
+        .faq-section h2 i {
+            color: var(--sxc-gold);
+        }
+
+        .faq-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .faq-item {
             background: var(--white);
+            border: 1px solid var(--border-light);
             border-radius: var(--radius-lg);
+            transition: var(--transition-base);
+            overflow: hidden;
+        }
+
+        .faq-item:hover {
+            border-color: var(--sxc-maroon-light);
             box-shadow: var(--shadow-md);
         }
 
-        .empty-state i {
-            font-size: 4rem;
-            color: var(--border-dark);
-            margin-bottom: 20px;
+        .faq-item.active {
+            border-color: var(--sxc-maroon);
+            box-shadow: 0 15px 30px rgba(6, 103, 164, 0.1);
         }
 
-        .empty-state p {
-            color: var(--text-muted);
+        .faq-question {
+            padding: 25px 30px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            color: var(--sxc-maroon);
             font-size: 1.1rem;
-            margin-bottom: 20px;
+            background: var(--white);
+            transition: var(--transition-base);
         }
 
-        .btn-reset {
+        .faq-question:hover {
+            background: var(--sxc-maroon-soft);
+        }
+
+        .faq-question i {
+            color: var(--sxc-gold);
+            font-size: 1.1rem;
+            transition: var(--transition-base);
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .faq-answer {
+            padding: 0 30px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            color: var(--text-muted);
+            font-size: 0.98rem;
+            line-height: 1.7;
+            background: var(--white);
+            border-top: 1px solid transparent;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 0 30px 30px;
+            max-height: 500px;
+            border-top-color: var(--border-light);
+        }
+
+        /* ===== BACK LINK ===== */
+        .back-link {
+            text-align: center;
+            margin-top: 70px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .back-link a {
+            color: var(--sxc-maroon);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 12px 30px;
-            background: var(--sxc-maroon);
-            color: var(--white);
+            gap: 12px;
+            padding: 16px 32px;
             border-radius: var(--radius-full);
-            text-decoration: none;
-            font-weight: 600;
+            background: var(--sxc-maroon-soft);
             transition: var(--transition-base);
-            border: none;
-            cursor: pointer;
+            border: 1px solid transparent;
         }
 
-        .btn-reset:hover {
-            background: var(--sxc-maroon-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(6, 103, 164, 0.3);
+        .back-link a:hover {
+            background: var(--sxc-maroon);
+            color: var(--white);
+            transform: translateX(-5px);
+            box-shadow: 0 10px 25px rgba(6, 103, 164, 0.2);
+        }
+
+        .back-link a i {
+            transition: var(--transition-base);
+        }
+
+        .back-link a:hover i {
+            transform: translateX(-5px);
         }
 
         /* ===== FOOTER ===== */
@@ -699,7 +605,7 @@ require_once '../backend/data.php';
             padding: 80px 0 30px;
             position: relative;
             overflow: hidden;
-            margin-top: 60px;
+            margin-top: 80px;
         }
 
         .footer::before {
@@ -896,18 +802,13 @@ require_once '../backend/data.php';
 
         /* ===== RESPONSIVE DESIGN ===== */
         @media (max-width: 1024px) {
-            .filter-bar {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .search-box {
-                min-width: 100%;
-            }
-
             .footer-content {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 40px;
+            }
+            
+            .protocol-card {
+                padding: 40px;
             }
         }
 
@@ -955,44 +856,25 @@ require_once '../backend/data.php';
             }
 
             .page-header h1 {
-                font-size: 2.2rem;
+                font-size: 2.4rem;
             }
 
-            .header-stats {
+            .protocol-card {
+                padding: 30px 25px;
+            }
+
+            .important-note {
                 flex-direction: column;
-                gap: 20px;
-                align-items: center;
+                text-align: center;
+                padding: 25px;
             }
 
-            .filter-section {
-                top: 80px;
+            .important-note i {
+                margin-bottom: 10px;
             }
 
-            .filter-tabs {
-                justify-content: center;
-            }
-
-            .filter-tab {
-                width: calc(50% - 5px);
-                justify-content: center;
-            }
-
-            .section-header {
-                flex-direction: column;
-                gap: 15px;
-                align-items: flex-start;
-            }
-
-            .event-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .info-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .event-footer {
-                flex-direction: column;
+            .legal-section h2 {
+                font-size: 1.5rem;
             }
 
             .footer-content {
@@ -1020,26 +902,42 @@ require_once '../backend/data.php';
                 font-size: 1.8rem;
             }
 
-            .filter-tab {
-                width: 100%;
+            .protocol-card {
+                padding: 25px 20px;
             }
 
-            .search-box button {
-                padding: 10px 16px;
+            .legal-section li {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
             }
 
-            .search-box button span {
-                display: none;
-            }
-
-            .event-title {
-                font-size: 1.3rem;
+            .role-tag {
+                margin-left: 0;
             }
 
             .scroll-top {
                 bottom: 20px;
                 right: 20px;
             }
+        }
+
+        /* ===== CUSTOM SCROLLBAR ===== */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-light);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--sxc-maroon);
+            border-radius: var(--radius-full);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--sxc-maroon-dark);
         }
     </style>
 </head>
@@ -1060,7 +958,7 @@ require_once '../backend/data.php';
                 <a href="../index.php" class="nav-link">
                     <i class="fas fa-home"></i> Home
                 </a>
-                <a href="events.php" class="nav-link active">
+                <a href="events.php" class="nav-link">
                     <i class="fas fa-calendar-alt"></i> Events
                 </a>
                 <a href="clubs.php" class="nav-link">
@@ -1068,6 +966,9 @@ require_once '../backend/data.php';
                 </a>
                 <a href="schedule.php" class="nav-link">
                     <i class="fas fa-clock"></i> Schedule
+                </a>
+                <a href="about.php" class="nav-link active">
+                    <i class="fas fa-shield-alt"></i> Protocol
                 </a>
                 <?php if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_email'])): ?>
                     <a href="../backend/login.php" class="nav-link">
@@ -1086,150 +987,127 @@ require_once '../backend/data.php';
     <section class="page-header">
         <div class="container">
             <div class="page-header-content">
-                <h1>Event Explorer</h1>
-                <p>Live updates from your favorite St. Xavier's Clubs</p>
-                
-                <?php
-                    $events = fetchEvents();
-                    $totalEvents = $events ? $events->num_rows : 0;
-                    $approvedCount = 0;
-                    $pendingCount = 0;
-                    
-                    if ($events) {
-                        $events->data_seek(0);
-                        while($ev = $events->fetch_assoc()) {
-                            if ($ev['approval_status'] == 'Approved') $approvedCount++;
-                            else $pendingCount++;
-                        }
-                        $events->data_seek(0);
-                    }
-                ?>
-                
-                <div class="header-stats">
-                    <div class="stat-item">
-                        <span class="stat-number"><?php echo $totalEvents; ?>+</span>
-                        <span class="stat-label">Total Events</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number"><?php echo $approvedCount; ?></span>
-                        <span class="stat-label">Approved</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number"><?php echo $pendingCount; ?></span>
-                        <span class="stat-label">Pending</span>
-                    </div>
+                <span class="page-badge">
+                    <i class="fas fa-shield-alt"></i> Institutional Governance
+                </span>
+                <h1>Institutional Terms</h1>
+                <p>SyncSXC Access Control & Governance Protocol</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="protocol-card">
+            <!-- Important Note -->
+            <div class="important-note">
+                <i class="fa-solid fa-envelope-circle-check"></i>
+                <div>
+                    <strong style="font-size: 1.1rem;">🔐 Automated Notification Clause</strong>
+                    <p style="margin-top: 10px; color: #856404;">By utilizing SyncSXC, you provide explicit consent for the system to transmit security alerts, administrative updates, and recovery protocols to your <strong style="color: #7a5c00;">Recovery Email Address</strong>.</p>
                 </div>
             </div>
-        </div>
-    </section>
 
-
-
-    <!-- Events Section -->
-    <section class="events-section">
-        <div class="container">
-            <div class="section-header">
+            <!-- Legal Sections -->
+            <section class="legal-section">
                 <h2>
-                    <i class="fas fa-calendar-alt"></i>
-                    Upcoming Events
+                    <i class="fas fa-sitemap"></i>
+                    1. Access Hierarchy & Authentication
                 </h2>
-                <span class="event-count" id="eventCount">
-                    <i class="fas fa-list"></i>
-                    <?php echo $totalEvents; ?> Events
-                </span>
-            </div>
+                <p>SyncSXC operates on a dual-tier authentication model designed to maintain the sanctity of college event data:</p>
+                <ul>
+                    <li>
+                        <span style="flex: 1;"><strong>Executive Access</strong> <span class="role-tag tag-executive"><i class="fas fa-crown"></i> Admin</span></span>
+                        <span style="color: var(--text-muted);">Official Club Emails (<code>clubname@sxc.edu.np</code>) are pre-registered within the core system. Executives do not require a Sign-Up process and may proceed directly to Sign-In.</span>
+                    </li>
+                    <li>
+                        <span style="flex: 1;"><strong>Student Access</strong> <span class="role-tag tag-student"><i class="fas fa-user-graduate"></i> Viewer</span></span>
+                        <span style="color: var(--text-muted);">Regular students are required to undergo a one-time Sign-Up process using their individual <code>@sxc.edu.np</code> institutional account.</span>
+                    </li>
+                </ul>
 
-            <!-- Events Grid -->
-            <div class="event-grid" id="eventGrid">
-                <?php
-                    if ($events && $events->num_rows > 0):
-                        while($ev = $events->fetch_assoc()): 
-                            $statusClass = ($ev['approval_status'] == 'Approved') ? 'status-approved' : 'status-pending';
-                            $isTeam = ($ev['is_team_event']) ? 'Team Based' : 'Individual';
-                            $priceText = ($ev['price'] > 0) ? 'Rs. ' . number_format($ev['price']) : 'FREE';
-                            $teamSize = ($ev['is_team_event']) ? $ev['min_team_size'] . '-' . $ev['max_team_size'] . ' members' : 'Solo';
-                ?>
-                    <div class="event-card" 
-                         data-status="<?php echo strtolower($ev['approval_status']); ?>"
-                         data-price="<?php echo $ev['price']; ?>"
-                         data-title="<?php echo strtolower(htmlspecialchars($ev['title'])); ?>"
-                         data-club="<?php echo strtolower(htmlspecialchars($ev['name'])); ?>">
-                        
-                        <div class="event-header">
-                            <span class="status-badge <?php echo $statusClass; ?>">
-                                <i class="fas <?php echo ($ev['approval_status'] == 'Approved') ? 'fa-check-circle' : 'fa-clock'; ?>"></i>
-                                <?php echo htmlspecialchars($ev['approval_status']); ?>
-                            </span>
-                            <span class="price-tag">
-                                <i class="fas fa-tag"></i>
-                                <?php echo $priceText; ?>
-                            </span>
+                <h2>
+                    <i class="fas fa-scale-balanced"></i>
+                    2. Governance & Ownership
+                </h2>
+                <p>SyncSXC is a structured repository for St. Xavier's College, Maitighar. Clubs are permanent institutional entities; they cannot be created, deleted, or altered by users. Information management is strictly reserved for appointed Club Executives.</p>
+
+                <h2>
+                    <i class="fas fa-shield-haltered"></i>
+                    3. Data Usage & Security
+                </h2>
+                <p>We enforce a strict <strong style="color: var(--sxc-maroon);">Institutional-Only</strong> data policy. Attempting to use personal non-SXC domains for primary access is a violation of our security protocol and will result in an automatic account lockout.</p>
+            </section>
+
+            <!-- FAQ Section -->
+            <section class="faq-section">
+                <h2>
+                    <i class="fas fa-circle-question"></i>
+                    Comprehensive FAQ
+                </h2>
+                
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span><i class="fas fa-user-tie" style="color: var(--sxc-gold); margin-right: 12px;"></i> I am a Club Executive. Do I need to sign up?</span>
+                            <i class="fas fa-plus"></i>
                         </div>
-
-                        <div class="event-body">
-                            <span class="club-badge">
-                                <i class="fas fa-users"></i>
-                                <?php echo htmlspecialchars($ev['name']); ?>
-                            </span>
-                            <h3 class="event-title"><?php echo htmlspecialchars($ev['title']); ?></h3>
-                            <p class="event-desc">
-                                <?php 
-                                    $desc = htmlspecialchars($ev['description']);
-                                    echo strlen($desc) > 120 ? substr($desc, 0, 117) . '...' : $desc;
-                                ?>
-                            </p>
-                            
-                            <div class="info-grid">
-                                <div class="info-item">
-                                    <i class="fa-solid fa-calendar-day"></i>
-                                    <span><?php echo date('M d, Y', strtotime($ev['proposed_date'])); ?></span>
-                                </div>
-                                <div class="info-item">
-                                    <i class="fa-solid fa-location-dot"></i>
-                                    <span><?php echo htmlspecialchars($ev['venue']); ?></span>
-                                </div>
-                                <div class="info-item">
-                                    <i class="fa-solid fa-users"></i>
-                                    <span><?php echo $isTeam; ?> (<?php echo $teamSize; ?>)</span>
-                                </div>
-                                <div class="info-item">
-                                    <i class="fa-solid fa-layer-group"></i>
-                                    <span><?php echo ($ev['is_multistep']) ? 'Multi-Step' : 'Single Form'; ?></span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="event-footer">
-                            <?php if(!empty($ev['rulebook_url'])): ?>
-                                <a href="<?php echo htmlspecialchars($ev['rulebook_url']); ?>" class="btn btn-outline" target="_blank">
-                                    <i class="fa-solid fa-book"></i> Rules
-                                </a>
-                            <?php else: ?>
-                                <span class="btn btn-outline" style="opacity: 0.5; cursor: not-allowed;">
-                                    <i class="fa-solid fa-book"></i> Rules
-                                </span>
-                            <?php endif; ?>
-                            <a href="event-details.php?id=<?php echo $ev['event_id']; ?>" class="btn btn-main">
-                                <i class="fa-solid fa-eye"></i> View Details
-                            </a>
+                        <div class="faq-answer">
+                            Yes, even though you're an executive, you still need to sign up to create your personalized student profile. You can access admin powers through your club email during the sign-in process.
                         </div>
                     </div>
-                <?php 
-                        endwhile;
-                    else:
-                ?>
-                    <div class="empty-state">
-                        <i class="fas fa-calendar-times"></i>
-                        <p>No events found at the moment.</p>
-                        <p style="font-size: 0.9rem; margin-bottom: 30px;">Check back soon for exciting campus events!</p>
-                        <button onclick="resetFilters()" class="btn-reset">
-                            <i class="fas fa-redo-alt"></i> Refresh
-                        </button>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span><i class="fas fa-envelope" style="color: var(--sxc-gold); margin-right: 12px;"></i> What happens if I try to sign up with a Gmail account?</span>
+                            <i class="fas fa-plus"></i>
+                        </div>
+                        <div class="faq-answer">
+                            The system will reject the request. SyncSXC is built exclusively for the Xavierian community. Only <code>@sxc.edu.np</code> domains are recognized by our authentication firewall.
+                        </div>
                     </div>
-                <?php endif; ?>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span><i class="fas fa-users-between-lines" style="color: var(--sxc-gold); margin-right: 12px;"></i> Can I manage multiple clubs with one email?</span>
+                            <i class="fas fa-plus"></i>
+                        </div>
+                        <div class="faq-answer">
+                            No. Each administrative session is tied to a specific Club Email. This ensures that actions taken (adding events, updating descriptions) are logged to the correct club entity.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span><i class="fas fa-envelope-open-text" style="color: var(--sxc-gold); margin-right: 12px;"></i> Is the Recovery Email mandatory?</span>
+                            <i class="fas fa-plus"></i>
+                        </div>
+                        <div class="faq-answer">
+                            Yes. Because institutional emails can sometimes have strict spam filters, a secondary recovery email ensures you never lose access to your account during critical event periods like SET or Sports Week.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span><i class="fas fa-clock" style="color: var(--sxc-gold); margin-right: 12px;"></i> Who moderates the events added by Executives?</span>
+                            <i class="fas fa-plus"></i>
+                        </div>
+                        <div class="faq-answer">
+                            All events added by Club Executives enter a "Pending" state. They are reviewed by the Master Admin and College Council before being published to the student-facing timeline.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Back Link -->
+            <div class="back-link">
+                <a href="../index.php">
+                    <i class="fas fa-arrow-left"></i>
+                    Return to SyncSXC Hub
+                </a>
             </div>
         </div>
-    </section>
+    </div>
 
     <!-- Footer -->
     <footer class="footer">
@@ -1259,7 +1137,7 @@ require_once '../backend/data.php';
                         <li><a href="events.php"><i class="fas fa-calendar-alt"></i> Events</a></li>
                         <li><a href="clubs.php"><i class="fas fa-users"></i> Clubs</a></li>
                         <li><a href="schedule.php"><i class="fas fa-clock"></i> Schedule</a></li>
-                        <li><a href="../backend/login.php"><i class="fas fa-sign-in-alt"></i> Admin Login</a></li>
+                        <li><a href="about.php"><i class="fas fa-shield-alt"></i> Protocol</a></li>
                     </ul>
                 </div>
                 
@@ -1315,117 +1193,14 @@ require_once '../backend/data.php';
             }
         });
 
-        // Filter events
-        function filterEvents(filter, element) {
-            const cards = document.querySelectorAll('.event-card');
-            let visibleCount = 0;
-            
-            cards.forEach(card => {
-                const status = card.dataset.status;
-                const price = parseFloat(card.dataset.price);
-                let shouldShow = false;
-                
-                switch(filter) {
-                    case 'all':
-                        shouldShow = true;
-                        break;
-                    case 'approved':
-                        shouldShow = status === 'approved';
-                        break;
-                    case 'pending':
-                        shouldShow = status === 'pending';
-                        break;
-                    case 'free':
-                        shouldShow = price === 0;
-                        break;
-                }
-                
-                card.style.display = shouldShow ? 'flex' : 'none';
-                if (shouldShow) visibleCount++;
-            });
-            
-            // Update active tab
-            document.querySelectorAll('.filter-tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            element.classList.add('active');
-            
-            // Update event count
-            const eventCountEl = document.getElementById('eventCount');
-            if (eventCountEl) {
-                eventCountEl.innerHTML = `<i class="fas fa-list"></i> ${visibleCount} Events`;
-            }
-        }
-
-        // Search events
-        function searchEvents() {
-            const searchTerm = document.getElementById('eventSearch').value.toLowerCase();
-            const cards = document.querySelectorAll('.event-card');
-            let visibleCount = 0;
-            
-            cards.forEach(card => {
-                const title = card.dataset.title;
-                const club = card.dataset.club;
-                
-                if (title.includes(searchTerm) || club.includes(searchTerm)) {
-                    card.style.display = 'flex';
-                    visibleCount++;
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-            
-            // Update event count
-            const eventCountEl = document.getElementById('eventCount');
-            if (eventCountEl) {
-                eventCountEl.innerHTML = `<i class="fas fa-list"></i> ${visibleCount} Events`;
-            }
-        }
-
-        // Reset filters
-        function resetFilters() {
-            // Reset search input
-            document.getElementById('eventSearch').value = '';
-            
-            // Show all events
-            const cards = document.querySelectorAll('.event-card');
-            cards.forEach(card => {
-                card.style.display = 'flex';
-            });
-            
-            // Reset active tab
-            document.querySelectorAll('.filter-tab').forEach(tab => {
-                tab.classList.remove('active');
-                if (tab.innerHTML.includes('All Events')) {
-                    tab.classList.add('active');
-                }
-            });
-            
-            // Reset event count
-            const eventCountEl = document.getElementById('eventCount');
-            if (eventCountEl) {
-                eventCountEl.innerHTML = `<i class="fas fa-list"></i> ${cards.length} Events`;
-            }
-        }
-
-        // Enter key for search
-        document.getElementById('eventSearch').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                searchEvents();
-            }
-        });
-
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(q => {
+            q.addEventListener('click', () => {
+                const item = q.parentElement;
+                item.classList.toggle('active');
+                const icon = q.querySelector('i:last-child');
+                icon.classList.toggle('fa-plus');
+                icon.classList.toggle('fa-minus');
             });
         });
 
@@ -1446,26 +1221,29 @@ require_once '../backend/data.php';
             });
         }
 
-        // Handle responsive filter tabs
-        function handleResize() {
-            const filterTabs = document.querySelector('.filter-tabs');
-            if (window.innerWidth <= 768) {
-                filterTabs.style.flexWrap = 'wrap';
-            } else {
-                filterTabs.style.flexWrap = 'nowrap';
+        // Close mobile menu on window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                const navLinks = document.getElementById('navLinks');
+                const menuBtn = document.querySelector('.mobile-menu-btn i');
+                
+                if (navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                    menuBtn.classList.remove('fa-times');
+                    menuBtn.classList.add('fa-bars');
+                    document.body.style.overflow = 'auto';
+                }
             }
-        }
+        });
 
-        window.addEventListener('resize', handleResize);
-        handleResize();
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            // Set initial event count
-            const cards = document.querySelectorAll('.event-card');
-            const eventCountEl = document.getElementById('eventCount');
-            if (eventCountEl && cards.length > 0) {
-                eventCountEl.innerHTML = `<i class="fas fa-list"></i> ${cards.length} Events`;
+        // Auto-expand first FAQ
+        window.addEventListener('load', function() {
+            const firstFaq = document.querySelector('.faq-item');
+            if (firstFaq) {
+                firstFaq.classList.add('active');
+                const icon = firstFaq.querySelector('.faq-question i:last-child');
+                icon.classList.remove('fa-plus');
+                icon.classList.add('fa-minus');
             }
         });
     </script>

@@ -1,5 +1,51 @@
 <?php
+require_once 'data.php'; 
 session_start();
+
+if($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $primary_email = trim($_POST['primary_email']);
+    $recovery_email = trim($_POST['recovery_email']);
+    $password = $_POST['password'];
+    $terms_accepted = isset($_POST['terms']) ? true : false;
+
+    // 1. Terms validation
+    if(!$terms_accepted) {
+        die("<script>alert('You must agree to the terms to proceed.'); window.history.back();</script>");
+    }
+
+    // 2. Domain validation
+    if (!filter_var($primary_email, FILTER_VALIDATE_EMAIL) || !str_ends_with($primary_email, '@sxc.edu.np')) {
+        die("<script>alert('Access Denied: Only @sxc.edu.np emails allowed.'); window.history.back();</script>");
+    }
+
+
+    $check_stmt = $conn->prepare("SELECT id FROM users WHERE primary_email = ?");
+    $check_stmt->bind_param("s", $primary_email);
+    $check_stmt->execute();
+    $result = $check_stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        die("<script>alert('Account already exists. Please Sign In.'); window.location.href='../login.php';</script>");
+    }
+
+
+    $sql = $conn->prepare("INSERT INTO users (primary_email, recovery_email, password, role) VALUES (?, ?, ?, 'student')");
+    
+
+    $hashed_pw = password_hash($password, PASSWORD_DEFAULT);
+    
+    $sql->bind_param("sss", $primary_email, $recovery_email, $hashed_pw);
+    
+    if($sql->execute()) {
+       
+        $_SESSION['user_email'] = $primary_email;
+        $_SESSION['role'] = 'student'; 
+        header('Location: ../index.php'); 
+        exit;
+    } else {
+        echo "Error: " . $conn->error;
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -125,7 +171,7 @@ session_start();
                 <p>Verify your official identity to continue.</p>
             </div>
 
-            <form action="backend/process_signin.php" method="POST" id="signinForm">
+            <form  method="POST" id="signinForm">
                 
                 <div class="input-box">
                     <label>Primary Institutional Email</label>
@@ -140,7 +186,7 @@ session_start();
                 <div class="input-box">
                     <label>Recovery Email</label>
                     <div class="input-field">
-                        <i class="fa-solid fa-envelope-shield"></i>
+                        <i class="fa-solid fa-envelope"></i>
                         <input type="email" name="recovery_email" placeholder="Personal email for recovery" required>
                     </div>
                 </div>
@@ -152,7 +198,7 @@ session_start();
                         <input type="password" name="password" placeholder="••••••••" required>
                     </div>
                 </div>
-
+                <input type="checkbox" name="terms" required> I agree to the <a href="../public/terms.php" target="_blank">terms and conditions</a>
                 <button type="submit" class="btn-submit">Initialize Session</button>
                 <div class="back-link">
                 <a href = "login.php"><i class="fa-solid fa-user-plus"></i> Login</a> |
