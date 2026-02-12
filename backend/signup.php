@@ -7,6 +7,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     $recovery_email = trim($_POST['recovery_email']);
     $password = $_POST['password'];
     $terms_accepted = isset($_POST['terms']) ? true : false;
+    $club_id = $_POST['club'];
 
     // 1. Terms validation
     if(!$terms_accepted) {
@@ -29,12 +30,12 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
 
-    $sql = $conn->prepare("INSERT INTO users (primary_email, recovery_email, password, role) VALUES (?, ?, ?, 'student')");
+    $sql = $conn->prepare("INSERT INTO users (primary_email, recovery_email, password, role, club_id) VALUES (?, ?, ?, 'student',?)");
     
 
     $hashed_pw = password_hash($password, PASSWORD_DEFAULT);
     
-    $sql->bind_param("sss", $primary_email, $recovery_email, $hashed_pw);
+    $sql->bind_param("sssi", $primary_email, $recovery_email, $hashed_pw, $club_id);
     
     if($sql->execute()) {
        
@@ -55,107 +56,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Secure Access | SyncSXC</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --sxc-blue: #0667A4;
-            --sxc-dark: #002147;
-            --sxc-gold: #d4af37;
-            --white: #ffffff;
-            --error: #e74c3c;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
-
-        body {
-            background: #f0f2f5;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .login-container {
-            width: 1100px;
-            height: 650px;
-            background: var(--white);
-            display: flex;
-            border-radius: 24px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.12);
-            overflow: hidden;
-        }
-
-        /* Brand Side */
-        .brand-side {
-            flex: 1;
-            background: var(--sxc-dark);
-            background-image: linear-gradient(135deg, rgba(6,103,164,0.8) 0%, rgba(0,33,71,0.9) 100%), 
-                              url('https://www.transparenttextures.com/patterns/cubes.png');
-            padding: 60px;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .brand-side h1 { font-size: 3.5rem; margin-bottom: 20px; }
-        .brand-side h1 span { color: var(--sxc-gold); }
-        .brand-side p { font-size: 1.1rem; line-height: 1.8; opacity: 0.8; font-weight: 300; }
-
-        /* Form Side */
-        .form-side {
-            flex: 1.2;
-            padding: 60px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .header { margin-bottom: 30px; }
-        .header h2 { color: var(--sxc-dark); font-size: 2rem; }
-        .header p { color: #666; font-size: 0.95rem; }
-
-        .input-box { margin-bottom: 20px; position: relative; }
-        .input-box label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; color: var(--sxc-dark); }
-        
-        .input-field { position: relative; }
-        .input-field i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--sxc-blue); }
-        
-        .input-field input {
-            width: 100%;
-            padding: 14px 15px 14px 45px;
-            border: 2px solid #e1e1e1;
-            border-radius: 12px;
-            outline: none;
-            transition: 0.3s;
-            font-size: 1rem;
-        }
-
-        .input-field input:focus { border-color: var(--sxc-blue); box-shadow: 0 0 10px rgba(6,103,164,0.1); }
-
-        .btn-submit {
-            background: var(--sxc-blue);
-            color: white;
-            padding: 16px;
-            border: none;
-            border-radius: 12px;
-            width: 100%;
-            font-size: 1.1rem;
-            font-weight: 700;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: 0.3s;
-        }
-
-        .btn-submit:hover { background: var(--sxc-dark); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,33,71,0.2); }
-
-        .domain-note { font-size: 0.8rem; color: var(--sxc-gold); margin-top: 5px; font-weight: 500; }
-          .back-link {
-            text-align: center;
-            margin-top: 25px;
-            font-size: 0.9rem;
-        }
-         .back-link a { color: var(--sxc-blue); text-decoration: none; font-weight: 600; }
-    </style>
+    <link rel="stylesheet" href="../css/signup.css">  
 </head>
 <body>
 
@@ -197,6 +98,25 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <i class="fa-solid fa-key"></i>
                         <input type="password" name="password" placeholder="••••••••" required>
                     </div>
+                </div><div class="input-box">
+                    <label>Select your club</label>
+                    <div class="input-field">
+                        <i class="fa-solid fa-users"></i>
+                        <select name="club" required>
+                            <option value="" disabled selected>Select your club</option>
+                            <option value="1">The set club</option>
+                            <option value="2">sxc sports club</option>
+                            <option value="3">sxc computer club</option>
+                            <option value="4">Magis Club SXC</option>
+                            <option value="5">Art and Culture club</option>
+                            <option value="6">chemistry club</option>
+                            <option value="7">Alumini club</option>
+                            <option value="8">Physics club</option>
+                            <option value="9">USMN</option>
+                            <option value="10">literary club</option>
+                            <option value="11">Maths club</option>
+                            <option value="12">Ecosphere club</option>
+                        </select>
                 </div>
                 <input type="checkbox" name="terms" required> I agree to the <a href="../public/terms.php" target="_blank">terms and conditions</a>
                 <button type="submit" class="btn-submit">Initialize Session</button>
