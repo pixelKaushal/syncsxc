@@ -309,8 +309,8 @@ require_once 'backend/data.php';
                     <h3 class="footer-heading">Contact</h3>
                     <ul class="footer-links">
                         <li><a href="#"><i class="fas fa-map-marker-alt"></i> St. Xavier's College, Maitighar</a></li>
-                        <li><a href="mailto:info@syncsxc.edu.np"><i class="fas fa-envelope"></i> info@syncsxc.edu.np</a></li>
-                        <li><a href="tel:+97711234567"><i class="fas fa-phone"></i> +977 1-1234567</a></li>
+                        <li><a href="mailto:neb@sxc.edu.np"><i class="fas fa-envelope"></i> neb@sxc.edu.np</a></li>
+                        <li><a href="tel:+977015321365"><i class="fas fa-phone"></i> +977-01-5321365, 5344636</a></li>
                     </ul>
                 </div>
             </div>

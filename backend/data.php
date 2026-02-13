@@ -41,4 +41,10 @@ function fetchEvents($num = null){
             
     return $conn->query($sql);
 }
+function clubbyid($cid){
+    global $conn; 
+    $club_id = (int)$cid;
+    $sql = "SELECT * FROM clubs WHERE id = $club_id";
+    return $conn->query($sql);
+}
 ?>

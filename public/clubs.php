@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once '../backend/data.php';
+$cid = $_GET['club_id'] ?? null;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,6 +12,7 @@ require_once '../backend/data.php';
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/clubs.css">
+    <link rel="stylesheet" href="../css/clubhighlight.css">
     
 </head>
 <body>
@@ -51,7 +53,57 @@ require_once '../backend/data.php';
             </div>
         </div>
     </nav>
+   <?php
+// Get club ID from URL
+$cid = $_GET['club_id'] ?? null;
 
+// Fetch club by ID if provided
+if ($cid) {
+    $clubs = clubbyid($cid);
+    if ($clubs && $clubs->num_rows > 0) {
+        $club = $clubs->fetch_assoc();
+        $club_id = $club['id'];
+        $club_code = $club['club_code'];
+        $club_name = $club['name'];
+        $club_email = $club['email'];
+        $club_description = $club['description'];
+        $club_logo = $club['logo_path'];
+?>
+        <!-- Club Highlight Banner -->
+        <div class="club-highlight-banner">
+            <div class="container">
+                <div class="club-highlight-content">
+                    <div class="club-highlight-info">
+                        <span class="club-highlight-badge">
+                            <i class="fas fa-eye"></i> FEATURED CLUB
+                        </span>
+                        <h2><?php echo htmlspecialchars($club_name); ?></h2>
+                        <div class="club-highlight-meta">
+                            <span class="club-highlight-code">
+                                <i class="fas fa-tag"></i> <?php echo htmlspecialchars($club_code); ?>
+                            </span>
+                            <span class="club-highlight-email">
+                                <i class="fas fa-envelope"></i> <?php echo htmlspecialchars($club_email); ?>
+                            </span>
+                        </div>
+                        <p class="club-highlight-desc"><?php echo htmlspecialchars($club_description); ?></p>
+                        
+                    </div>
+                    <div class="club-highlight-logo">
+                        <?php if($club_logo && file_exists("../img/{$club_logo}")): ?>
+                            <img src="../img/<?php echo htmlspecialchars($club_logo); ?>" alt="<?php echo htmlspecialchars($club_name); ?>">
+                        <?php else: ?>
+                            <i class="fas fa-users"></i>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<?php
+    }
+}
+?>
     <!-- Page Header -->
     <section class="page-header">
         <div class="container">
