@@ -38,7 +38,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     $sql->bind_param("sssi", $primary_email, $recovery_email, $hashed_pw, $club_id);
     
     if($sql->execute()) {
-       
+        
         $_SESSION['user_email'] = $primary_email;
         $_SESSION['role'] = 'student'; 
         header('Location: ../index.php'); 
