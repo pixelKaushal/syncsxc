@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $update->bind_param("sssssiiiidi", $title, $date, $desc, $venue, $status, $is_team, $min_size, $max_size, $price, $event_id, $club_id);
 
     if ($update->execute()) {
-        echo "<script>alert('✅ Event updated successfully!'); window.location.href='dashboard.php';</script>";
+        echo "<script>alert(' Event updated successfully!'); window.location.href='../admin/dashboard.php';</script>";
     } else {
         echo "<script>alert('Error updating record: " . addslashes($conn->error) . "');</script>";
     }
@@ -254,11 +254,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </button>
                 
                 <!-- Cancel Link -->
-                <a href="dashboard.php" class="cancel-link">
+                <a href="../admin/dashboard.php" class="cancel-link">
                     <i class="fas fa-times"></i>
                     Cancel and Return to Dashboard
                 </a>
-            </form>
+            </form> 
         </div>
     </div>
 

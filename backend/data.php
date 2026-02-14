@@ -47,4 +47,15 @@ function clubbyid($cid){
     $sql = "SELECT * FROM clubs WHERE id = $club_id";
     return $conn->query($sql);
 }
+
+function eventbyid($eid){
+    global $conn; 
+    $event_id = (int)$eid;
+    $sql = "SELECT e.*, c.name, c.logo_path 
+            FROM events e 
+            INNER JOIN clubs c ON e.club_id = c.id 
+            WHERE event_id = $event_id";
+    return $conn->query($sql);
+}
+
 ?>

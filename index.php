@@ -228,7 +228,7 @@ require_once 'backend/data.php';
                         ?>
                     </p>
                     
-                    <a href="public/clubs.php#club-<?php echo $club['club_code']; ?>" class="btn btn-primary">
+                    <a href="public/clubs.php?club_id=<?php echo $club['id']; ?>" class="btn btn-primary">
                         <i class="fas fa-eye"></i> View Club
                     </a>
                 </div>
