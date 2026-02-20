@@ -1,34 +1,4 @@
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
 
-        :root {
-            --sxc-maroon: #0667A4;
-            --sxc-maroon-dark: #05558a;
-            --sxc-maroon-light: rgba(6, 103, 164, 0.1);
-            --sxc-maroon-soft: rgba(6, 103, 164, 0.05);
-            --sxc-gold: #d4af37;
-            --sxc-gold-dark: #b8960c;
-            --sxc-gold-light: rgba(212, 175, 55, 0.1);
-            --white: #ffffff;
-            --bg-light: #f8f9fa;
-            --bg-dark: #1a2634;
-            --text-dark: #2d3436;
-            --text-muted: #636e72;
-            --border-light: #e9ecef;
-            --shadow-sm: 0 5px 20px rgba(0,0,0,0.05);
-            --shadow-md: 0 8px 30px rgba(0,0,0,0.08);
-            --shadow-lg: 0 15px 40px rgba(0,0,0,0.12);
-            --radius-sm: 8px;
-            --radius-md: 12px;
-            --radius-lg: 16px;
-            --radius-xl: 24px;
-            --radius-full: 9999px;
-            --font-primary: 'Inter', sans-serif;
-            --font-heading: 'Outfit', sans-serif;
-        }
 
         body {
             font-family: var(--font-primary);

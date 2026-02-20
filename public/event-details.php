@@ -73,6 +73,7 @@ $event_time = date('g:i A', strtotime($event['proposed_date']));
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/event-details.css">
+    <link rel="stylesheet" href="../css/global.css">
     
 </head>
 <body>
