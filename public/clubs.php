@@ -13,6 +13,7 @@ $cid = $_GET['club_id'] ?? null;
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/clubs.css">
     <link rel="stylesheet" href="../css/clubhighlight.css">
+    <link rel="stylesheet" href="../css/global.css">
     
 </head>
 <body>
@@ -38,8 +39,8 @@ $cid = $_GET['club_id'] ?? null;
                 <a href="clubs.php" class="nav-link active">
                     <i class="fas fa-users"></i> Clubs
                 </a>
-                <a href="schedule.php" class="nav-link">
-                    <i class="fas fa-clock"></i> Schedule
+                <a href="registrations.php" class="nav-link">
+                    <i class="fas fa-clock"></i> Registrations
                 </a>
                 <?php if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_email'])): ?>
                     <a href="../backend/login.php" class="nav-link">
@@ -190,7 +191,7 @@ if ($cid) {
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
+       <footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-col">
@@ -204,9 +205,9 @@ if ($cid) {
                     </p>
                     <div class="social-links">
                         <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.instagram.com/pixelkaushal/" target="_blank" class="social-link"><i class="fab fa-instagram"></i></a>
                         <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.linkedin.com/in/kaushal-gautam-383401337/" target="_blank" class="social-link"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
                 
@@ -214,10 +215,10 @@ if ($cid) {
                     <h3 class="footer-heading">Quick Links</h3>
                     <ul class="footer-links">
                         <li><a href="../index.php"><i class="fas fa-home"></i> Home</a></li>
-                        <li><a href="events.php"><i class="fas fa-calendar-alt"></i> Events</a></li>
-                        <li><a href="clubs.php"><i class="fas fa-users"></i> Clubs</a></li>
-                        <li><a href="schedule.php"><i class="fas fa-clock"></i> Schedule</a></li>
-                        <li><a href="../about.php"><i class="fas fa-info-circle"></i> About</a></li>
+                        <li><a href="../public/events.php"><i class="fas fa-calendar-alt"></i> Events</a></li>
+                        <li><a href="../public/clubs.php"><i class="fas fa-users"></i> Clubs</a></li>
+                        <li><a href="../public/schedule.php"><i class="fas fa-clock"></i> Registrations</a></li>
+                        <li><a href="../public/about.php"><i class="fas fa-info-circle"></i> About</a></li>
                     </ul>
                 </div>
                 
@@ -225,14 +226,14 @@ if ($cid) {
                     <h3 class="footer-heading">Contact</h3>
                     <ul class="footer-links">
                         <li><a href="#"><i class="fas fa-map-marker-alt"></i> St. Xavier's College, Maitighar</a></li>
-                        <li><a href="mailto:info@syncsxc.edu.np"><i class="fas fa-envelope"></i> info@syncsxc.edu.np</a></li>
-                        <li><a href="tel:+97711234567"><i class="fas fa-phone"></i> +977 1-1234567</a></li>
+                        <li><a href="mailto:neb@sxc.edu.np"><i class="fas fa-envelope"></i> neb@sxc.edu.np</a></li>
+                        <li><a href="tel:+977015321365"><i class="fas fa-phone"></i> +977-01-5321365, 5344636</a></li>
                     </ul>
                 </div>
             </div>
             
             <div class="copyright">
-                <p>&copy; <?php echo date('Y'); ?> SyncSXC. All rights reserved. | Made with <i class="fas fa-heart"></i> for SXC Community</p>
+                <p>&copy; <?php echo date('Y'); ?> SyncSXC. All rights reserved.</p>
             </div>
         </div>
     </footer>

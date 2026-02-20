@@ -96,6 +96,7 @@ usort($all_registrations, function($a, $b) {
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/registrations.css">
+    <link rel="stylesheet" href="../css/global.css">
 
 </head>
 <body>
@@ -115,7 +116,6 @@ usort($all_registrations, function($a, $b) {
                 <a href="../index.php" class="nav-link">Home</a>
                 <a href="events.php" class="nav-link">Events</a>
                 <a href="clubs.php" class="nav-link">Clubs</a>
-                <a href="schedule.php" class="nav-link">Schedule</a>
                 <a href="registrations.php" class="nav-link active">My Registrations</a>
                 <a href="profile.php" class="nav-link">Profile</a>
                 <a href="../backend/logout.php" class="nav-link">Logout</a>

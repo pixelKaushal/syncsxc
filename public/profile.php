@@ -58,6 +58,7 @@ $is_admin_view = ($current_user_role === 'admin');
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/profile.css">
+    <link rel="stylesheet" href="../css/global.css">
 </head>
 <body>
     <!-- Navigation -->
@@ -209,7 +210,7 @@ $is_admin_view = ($current_user_role === 'admin');
                 
                 <!-- Show Edit button only for own profile -->
                 <?php if ($is_own_profile): ?>
-                <a href="edit_profile.php" class="btn btn-primary">
+                <a href="edit_profile.php?id=<?php echo $target_user['id']; ?>" class="btn btn-primary">
                     <i class="fas fa-edit"></i> Edit Profile
                 </a>
                 <?php endif; ?>

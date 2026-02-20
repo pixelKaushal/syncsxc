@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once 'backend/data.php';
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +12,7 @@ require_once 'backend/data.php';
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/index.css">
-  
+    <link rel="stylesheet" href="css/global.css">
 </head>
 
 <body>
@@ -37,8 +38,8 @@ require_once 'backend/data.php';
                 <a href="public/clubs.php" class="nav-link">
                     <i class="fas fa-users"></i> Clubs
                 </a>
-                <a href="public/schedule.php" class="nav-link">
-                    <i class="fas fa-clock"></i> Schedule
+                <a href="public/registrations.php" class="nav-link">
+                    <i class="fas fa-clock"></i> Registrations
                 </a>
                 <?php if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_email'])): ?>
                     <a href="backend/login.php" class="nav-link">
@@ -171,7 +172,7 @@ require_once 'backend/data.php';
                             <i class="fas fa-map-marker-alt"></i>
                             <span><?php echo htmlspecialchars($event['venue']); ?></span>
                         </div>
-                        <a href="public/events.php#event-<?php echo $event['event_id']; ?>" class="btn btn-primary">
+                        <a href="public/event-details.php?id=<?php echo $event['event_id']; ?>" class="btn btn-primary">
                             View Details <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
@@ -265,7 +266,7 @@ require_once 'backend/data.php';
                     <a href="public/events.php" class="btn btn-cta-primary">
                         <i class="fas fa-rocket"></i> Get Started
                     </a>
-                    <a href="about.php" class="btn btn-cta-secondary">
+                    <a href="public/about.php" class="btn btn-cta-secondary">
                         <i class="fas fa-info-circle"></i> Learn More
                     </a>
                 </div>
@@ -288,9 +289,9 @@ require_once 'backend/data.php';
                     </p>
                     <div class="social-links">
                         <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.instagram.com/pixelkaushal/" target="_blank" class="social-link"><i class="fab fa-instagram"></i></a>
                         <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.linkedin.com/in/kaushal-gautam-383401337/" target="_blank" class="social-link"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
                 
@@ -301,7 +302,7 @@ require_once 'backend/data.php';
                         <li><a href="public/events.php"><i class="fas fa-calendar-alt"></i> Events</a></li>
                         <li><a href="public/clubs.php"><i class="fas fa-users"></i> Clubs</a></li>
                         <li><a href="public/schedule.php"><i class="fas fa-clock"></i> Schedule</a></li>
-                        <li><a href="about.php"><i class="fas fa-info-circle"></i> About</a></li>
+                        <li><a href="public/about.php"><i class="fas fa-info-circle"></i> About</a></li>
                     </ul>
                 </div>
                 
@@ -316,7 +317,7 @@ require_once 'backend/data.php';
             </div>
             
             <div class="copyright">
-                <p>&copy; <?php echo date('Y'); ?> SyncSXC. All rights reserved. | Made with <i class="fas fa-heart"></i> for SXC Community</p>
+                <p>&copy; <?php echo date('Y'); ?> SyncSXC. All rights reserved.</p>
             </div>
         </div>
     </footer>
